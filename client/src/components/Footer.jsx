@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
   return (
-    <div>Footer</div>
-  )
-}
+    <footer className="w-full bg-gray-900 text-gray-300 py-4 mt-auto fixed bottom-0 left-0">
+  <div className="max-w-6xl mx-auto text-center text-sm">
+    © {new Date().getFullYear()} EduFlow — All Rights Reserved
+  </div>
+</footer>
+)
+};
 
-export default Footer
+export default Footer;
