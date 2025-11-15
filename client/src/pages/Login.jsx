@@ -1,38 +1,49 @@
 import React from "react";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
+
 import Footer from "../components/Footer";
+import eduflow from "../assets/eduflow.jpg";
+import { googleLogin } from '../functions/userFunctions.js';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleGoogleLogin = async (decoded) => {
+    try {
+      await dispatch(googleLogin(decoded, navigate));
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Google Login Failed")
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-
-      <div className="flex flex-1">
-
-        <div className="hidden md:flex w-1/2 bg-gray-100 items-center justify-center p-8">
+    <div>
+      <div className="h-dvh bg-gray-50 flex">
+        <div className="w-1/2">
           <img
-            src="/src/assets/eduflow.jpg"
+            src={eduflow}
             alt="EduFlow"
-            className="rounded-2xl shadow-xl object-cover h-[450px] w-[350px]"
+            className="w-full h-full object-cover"
           />
         </div>
-
-        <div className="w-full md:w-1/2 flex items-center justify-center p-8">
-          <div className="text-center">
-
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Welcome to EduFlow
-            </h1>
-
-            <p className="text-gray-600 mb-6">
-              A smarter way to learn.
-            </p>
-
-          </div>
+        <div className="w-1/2 flex items-center justify-center p-8">
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              const decoded = jwtDecode(credentialResponse.credential);
+              handleGoogleLogin(decoded);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          />
         </div>
-
       </div>
-
       <Footer />
-
     </div>
   );
 };
