@@ -9,7 +9,7 @@ const Login = () => {
 
         <div className="hidden md:flex w-1/2 bg-gray-100 items-center justify-center p-8">
           <img
-            src="/public/eduflow.jpg"
+            src="/src/assets/eduflow.jpg"
             alt="EduFlow"
             className="rounded-2xl shadow-xl object-cover h-[450px] w-[350px]"
           />
