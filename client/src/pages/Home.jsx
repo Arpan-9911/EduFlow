@@ -58,26 +58,39 @@ export default function HomePage() {
       id: "10",
       name: "Principles of Macroeconomics-I",
       teacher: "Dr. Deepika Kandpal",
-    }
+    },
   ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [showJoinClassBox, setShowJoinClassBox] = useState(false);
   const [showCreateClassBox, setShowCreateClassBox] = useState(false);
   return (
     <div className="flex h-dvh bg-gray-100">
-      <Sidebar/>
+      <Sidebar />
 
-      <div className={`flex-1 ${showCreateClassBox || showJoinClassBox ? "overflow-y-hidden" : "overflow-y-auto"} p-6 relative`}>
+      <div
+        className={`flex-1 ${
+          showCreateClassBox || showJoinClassBox
+            ? "overflow-y-hidden"
+            : "overflow-y-auto"
+        } p-6 relative`}
+      >
         {classes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
-            <img src={EmptyBg} alt="Background" className="w-60 opacity-40 mb-6" />
-            <h2 className="text-2xl font-semibold text-gray-600">Please select a class!</h2>
+            <img
+              src={EmptyBg}
+              alt="Background"
+              className="w-60 opacity-40 mb-6"
+            />
+            <h2 className="text-2xl font-semibold text-gray-600">
+              Please select a class!
+            </h2>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {classes.map((cls, index) => (
               <NavLink
                 to={`/classes/${cls.id}`}
+                state={{ name: cls.name, teacher: cls.teacher }}
                 key={index}
                 className="bg-white shadow-md rounded overflow-hidden hover:shadow-lg transition cursor-pointer"
               >
@@ -86,7 +99,7 @@ export default function HomePage() {
                 </div>
                 <div className="p-3">
                   <h3 className="text-lg font-semibold">{cls.name}</h3>
-                  <p className="text-gray-500 mt-1 mb-0"> {cls.teacher}</p>
+                  <p className="text-gray-500 mt-1 mb-0">{cls.teacher}</p>
                 </div>
               </NavLink>
             ))}
@@ -129,8 +142,12 @@ export default function HomePage() {
           </button>
         </div>
         {/* {showJoinClassBox && <JoinClassBox />} */}
-        {showJoinClassBox && <JoinClassBox setShowJoinClassBox={setShowJoinClassBox} />}
-        {showCreateClassBox && <CreateClassBox setShowCreateClassBox={setShowCreateClassBox} />}
+        {showJoinClassBox && (
+          <JoinClassBox setShowJoinClassBox={setShowJoinClassBox} />
+        )}
+        {showCreateClassBox && (
+          <CreateClassBox setShowCreateClassBox={setShowCreateClassBox} />
+        )}
       </div>
     </div>
   );
