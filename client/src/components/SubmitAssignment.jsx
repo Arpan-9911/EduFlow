@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SubmitAssignment({ setShowSubmitBox }) {
   return (
-    <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-10">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
 
         <h2 className="text-2xl font-semibold mb-4">Submit Assignment</h2>
@@ -10,8 +10,7 @@ export default function SubmitAssignment({ setShowSubmitBox }) {
         <textarea
           placeholder="Your message (optional)"
           rows="3"
-          className="w-full p-3 border border-gray-300 rounded-lg mb-4 resize-none
-                     focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 border border-gray-300 rounded-lg mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input

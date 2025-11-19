@@ -5,6 +5,9 @@ import dotenv from 'dotenv';
 import http from 'http';
 
 import userRoutes from './routes/user.js';
+import classroomRoutes from './routes/classroom.js';
+import announcementRoutes from './routes/announcement.js';
+import assignmentRoutes from './routes/assignment.js';
 
 dotenv.config();
 const app = express();
@@ -19,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/classrooms', classroomRoutes);
+app.use('/api/announcements', announcementRoutes);
+app.use('/api/assignments', assignmentRoutes);
 
 // Database connection
 const MONGODB_URI = process.env.MONGODB_URI;

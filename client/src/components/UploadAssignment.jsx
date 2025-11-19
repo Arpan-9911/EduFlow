@@ -2,7 +2,7 @@ import React from "react";
 
 export default function UploadAssignment({ setShowUpload }) {
   return (
-    <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-10">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
 
         <h2 className="text-2xl font-semibold mb-4">

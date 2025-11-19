@@ -10,7 +10,7 @@ export default function Class() {
   const [showSubmitBox, setShowSubmitBox] = useState(false);
 
 
-  const [userRole, setUserRole] = useState("teacher"); // toggle this from backend
+  const [userRole, setUserRole] = useState("teacher");
 
 
   const location = useLocation();
@@ -27,13 +27,19 @@ export default function Class() {
   const assignments = Array.from({ length: 20 }, (_, i) => ({
     id: i + 1,
     title: `Assignment ${i + 1}`,
+    description: `Assignment description ${i + 1}`,
   }));
 
   return (
-    <div className="flex">
+    <div className="flex h-dvh bg-gray-100">
       <Sidebar />
-
-      <div className="flex flex-col w-full relative">
+      <div
+        className={`flex-1 ${
+          showUpload || showSubmitBox
+            ? "overflow-y-hidden"
+            : "overflow-y-auto"
+        } p-6 relative`}
+      >
         <div className="p-6 border-b flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-semibold">{name}</h1>
@@ -61,34 +67,31 @@ export default function Class() {
           </div>
         </div>
 
-        <div className="flex gap-6 p-6 h-[calc(100vh-100px)]">
+        <div className="flex items-start gap-6 p-6">
           <div className="flex flex-col w-[60%] bg-white rounded-xl p-4 shadow-sm">
             <h2 className="text-lg font-semibold mb-4">Announcements</h2>
-
-            <div className="flex-grow overflow-y-auto space-y-3 pr-2">
-              {announcements.map((a) => (
-                <div key={a.id} className="p-3 bg-gray-100 rounded">
-                  {a.text}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 flex items-center">
-              <input
-                type="text"
+            <div className="flex items-end mb-4">
+              <textarea
                 placeholder="Post an announcement..."
-                className="flex-grow border rounded-full px-4 py-2"
-              />
+                className="grow border rounded px-4 py-2"
+                rows={3}
+              ></textarea>
               <button className="ml-2 p-2 border bg-blue-400 hover:bg-blue-200 border-black rounded-full">
                 <Send size={16} />
               </button>
+            </div>
+            <div className="space-y-2">
+              {announcements.map((a) => (
+                <div key={a.id} className="px-3 py-2 bg-gray-100 rounded">
+                  {a.text}
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="flex flex-col w-[40%] bg-white rounded-xl p-4 shadow-sm">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Assignments</h2>
-
               <button
                 className="p-2 rounded-full border bg-blue-400 hover:bg-blue-200"
                 onClick={() => setShowUpload(!showUpload)}
@@ -99,16 +102,19 @@ export default function Class() {
 
             {showUpload && <UploadAssignment setShowUpload={setShowUpload} />}
 
-            <div className="flex-grow overflow-y-auto space-y-3 pr-2">
+            <div className="space-y-2">
               {assignments.map((asg) => (
                 <div
                   key={asg.id}
-                  className="p-3 bg-gray-100 rounded flex justify-between items-center"
+                  className="px-3 py-2 bg-gray-100 rounded flex justify-between items-start"
                 >
-                  <span>{asg.title}</span>
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{asg.title}</span>
+                    <span className="text-gray-600">{asg.description}</span>
+                  </div>
 
                   <button
-                    className="px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
+                    className="p-1 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600"
                     onClick={() => setShowSubmitBox(true)}
                   >
                     <ArrowUpCircle size={20} />

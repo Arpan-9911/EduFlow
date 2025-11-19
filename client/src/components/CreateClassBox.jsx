@@ -2,7 +2,7 @@ import React from 'react'
 
 const CreateClassBox = ({ setShowCreateClassBox }) => {
   return (
-    <div className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 flex items-center justify-center w-full h-full">
+    <div className="fixed inset-0 z-10 bg-black/50 flex items-center justify-center">
       <div className='bg-white p-6 rounded-lg shadow-lg w-96'>
         <h2 className='text-2xl font-semibold mb-4'>Create a Class</h2>
         <input
