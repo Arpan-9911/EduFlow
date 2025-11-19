@@ -1,10 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../functions/userFunctions";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = ["Maths", "DSA", "TOC", "OS", "A", "DBMS", "CN", "SE", "AI", "ML", "DL", "NLP", "CV", "DM", "Big Data", "Cloud Computing"];
   return (
     <div className="h-dvh overflow-y-auto bg-gray-800 min-w-64">
@@ -25,7 +27,7 @@ const Sidebar = () => {
         ))}
         <button
           onClick={() => {
-            dispatch(logout());
+            dispatch(logout(navigate));
           }}
           className="text-white bg-red-500 px-3 py-1 rounded m-2"
         >

@@ -1,8 +1,8 @@
 import React from "react";
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 import Footer from "../components/Footer";
@@ -12,6 +12,11 @@ import { googleLogin } from '../functions/userFunctions.js';
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer?.data?.user);
+  const token = useSelector((state) => state.userReducer?.data?.token);
+  if (user && token) {
+    return <Navigate to="/home" replace />;
+  }
 
   const handleGoogleLogin = async (decoded) => {
     try {
