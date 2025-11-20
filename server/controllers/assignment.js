@@ -4,7 +4,9 @@ import Assignment from "../models/assignment.js";
 export const createAssignment = async (req, res) => {
   try{
     const { title, description } = req.body;
-    const { userId: facultyId, classroomId } = req.params;
+    const { classroomId } = req.params;
+    const { userId: facultyId } = req;
+    console.log(classroomId);
     const classroom = await Classroom.findById(classroomId);
     if(!classroom) {
       return res.status(404).json({ message: 'Classroom not found' });
@@ -20,8 +22,9 @@ export const createAssignment = async (req, res) => {
 
 export const getAllAssignments = async (req, res) => {
   try{
-    const { classroomId, userId } = req.params;
-    classroom = await Classroom.findById(classroomId);
+    const { classroomId } = req.params;
+    const { userId } = req;
+    const classroom = await Classroom.findById(classroomId);
     if(!classroom) {
       return res.status(404).json({ message: 'Classroom not found' });
     } else if(classroom.facultyId !== userId && !classroom.students.includes(userId)) {

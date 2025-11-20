@@ -1,29 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
+import { createAssignment } from "../functions/assignmentFunctions";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function UploadAssignment({ setShowUpload }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const { classId: classroomId } = useParams();
+  const handleSubmit = async () => {
+    if(title == '' || description == '') {
+      toast.error('Please enter title and description')
+      return
+    }
+    try {
+      await dispatch(createAssignment(classroomId, { title, description }))
+      setShowUpload(false)
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Assignment Creation Failed")
+    }
+  }
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-10">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-
         <h2 className="text-2xl font-semibold mb-4">
           New Assignment
         </h2>
-
         <input
           type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="Assignment Title"
-          className="w-full p-3 border border-gray-300 rounded-lg mb-4
-                     focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-
         <textarea
           placeholder="Description"
           rows="4"
-          className="w-full p-3 border border-gray-300 rounded-lg mb-4
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
         ></textarea>
-
-        <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+        >
           Create Assignment
         </button>
 

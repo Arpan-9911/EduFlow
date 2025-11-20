@@ -12,8 +12,8 @@ import { googleLogin } from '../functions/userFunctions.js';
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer?.data?.user);
-  const token = useSelector((state) => state.userReducer?.data?.token);
+  const user = useSelector((state) => state.userReducer?.data?.user) || null;
+  const token = useSelector((state) => state.userReducer?.data?.token) || null;
   if (user && token) {
     return <Navigate to="/home" replace />;
   }

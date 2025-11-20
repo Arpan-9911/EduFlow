@@ -2,67 +2,17 @@ import { useState } from "react";
 import { Plus, BookCopy } from "lucide-react";
 import Sidebar from "../components/Sidebar";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import EmptyBg from "../assets/empty-bg.jpg";
 import JoinClassBox from "../components/JoinClassBox";
 import CreateClassBox from "../components/CreateClassBox";
 
 export default function HomePage() {
-  const classes = [
-    {
-      id: "1",
-      name: "Computer Networks",
-      teacher: "Dr. Arun Agarwal ",
-    },
-    {
-      id: "2",
-      name: "Advanced Data Structures and Algorithms",
-      teacher: "Dr. Kirti Yadav",
-    },
-    {
-      id: "3",
-      name: "Database Management Systems",
-      teacher: "Dr. Ravish Sharma",
-    },
-    {
-      id: "4",
-      name: "Software Engineering",
-      teacher: "Dr. Akshay Chamoli",
-    },
-    {
-      id: "5",
-      name: "Machine Learning",
-      teacher: "Dr. Arpita Aggarwal",
-    },
-    {
-      id: "6",
-      name: "Programming with Python",
-      teacher: "Dr. Rajni Dabas",
-    },
-    {
-      id: "7",
-      name: "Mathematics for Computing",
-      teacher: "Dr. Charu Puri",
-    },
-    {
-      id: "8",
-      name: "Theory of Computation",
-      teacher: "Dr. Veenu Bhasin",
-    },
-    {
-      id: "9",
-      name: "Theory Of Public Finance ",
-      teacher: "Dr. Urvashi Sharma",
-    },
-    {
-      id: "10",
-      name: "Principles of Macroeconomics-I",
-      teacher: "Dr. Deepika Kandpal",
-    },
-  ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [showJoinClassBox, setShowJoinClassBox] = useState(false);
   const [showCreateClassBox, setShowCreateClassBox] = useState(false);
+  const classes = useSelector((state) => state.classroomReducer.classrooms);
   return (
     <div className="flex h-dvh bg-gray-100">
       <Sidebar />
@@ -74,7 +24,7 @@ export default function HomePage() {
             : "overflow-y-auto"
         } p-6 relative`}
       >
-        {classes.length === 0 ? (
+        {classes && classes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <img
               src={EmptyBg}
@@ -87,10 +37,9 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {classes.map((cls, index) => (
+            {classes && classes.map((cls, index) => (
               <NavLink
-                to={`/classes/${cls.id}`}
-                state={{ name: cls.name, teacher: cls.teacher }}
+                to={`/classes/${cls._id}`}
                 key={index}
                 className="bg-white shadow-md rounded overflow-hidden hover:shadow-lg transition cursor-pointer"
               >
@@ -99,7 +48,7 @@ export default function HomePage() {
                 </div>
                 <div className="p-3">
                   <h3 className="text-lg font-semibold">{cls.name}</h3>
-                  <p className="text-gray-500 mt-1 mb-0">{cls.teacher}</p>
+                  <p className="text-gray-500 mt-1 mb-0">{cls.facultyName}</p>
                 </div>
               </NavLink>
             ))}

@@ -8,6 +8,10 @@ const classroomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  facultyName: {
+    type: String,
+    required: true,
+  },
   students: {
     type: Array,
     required: true,
